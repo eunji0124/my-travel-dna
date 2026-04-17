@@ -1,0 +1,68 @@
+import type { Character } from "../types/survey";
+
+export const characters: Character[] = [
+  {
+    id: "roe-deer", 
+    name: "직진하는 노루",
+    emoji: "🦌",
+    match: { activity: "active", planning: "free", focus: "explore" },
+    description: "지치지 않고 걷는 트래킹 여행자",
+    color: "#2D6A4F",
+  },
+  {
+    id: "otter", 
+    name: "에너자이저 수달",
+    emoji: "🦦",
+    match: { activity: "active", planning: "free", focus: "social" },
+    description: "액티비티 중독 여행자",
+    color: "#00B4D8",
+  },
+  {
+    id: "squirrel", 
+    name: "볼 빵빵 다람쥐",
+    emoji: "🐿️",
+    match: { activity: "calm", planning: "free", focus: "food" },
+    description: "맛집에 진심인 미식가",
+    color: "#FFB703",
+  },
+  {
+    id: "sloth", 
+    name: "꿈꾸는 나무늘보",
+    emoji: "🦥",
+    match: { activity: "calm", planning: "plan", focus: "explore" },
+    description: "힐링 여행자",
+    color: "#D4A373",
+  },
+  {
+    id: "border-collie", 
+    name: "똑똑한 보더콜리",
+    emoji: "🐕‍🦺",
+    match: { activity: "active", planning: "plan", focus: "explore" },
+    description: "완벽 계획형",
+    color: "#3F37C9",
+  },
+  {
+    id: "cat", 
+    name: "호기심 대장 고양이",
+    emoji: "🐈",
+    match: { activity: "calm", planning: "free", focus: "explore" },
+    description: "즉흥 탐험가",
+    color: "#7209B7",
+  },
+  {
+    id: "retriever", 
+    name: "다정한 리트리버",
+    emoji: "🐕",
+    match: { activity: "calm", planning: "plan", focus: "social" },
+    description: "사람 중심 여행자",
+    color: "#99582A",
+  },
+  {
+    id: "peacock", 
+    name: "화려한 공작새",
+    emoji: "🦚",
+    match: { activity: "calm", planning: "free", focus: "photo" },
+    description: "인생샷 여행자",
+    color: "#F72585",
+  },
+];
