@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { plannerData } from "../data/plannerData";
 
-// 1. 타입 정의
 declare global {
   interface Window {
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
@@ -13,68 +12,58 @@ declare global {
 export default function Planner() {
   const location = useLocation();
   const navigate = useNavigate();
-  
-  // 2. 참조(Ref) 관리
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstance = useRef<any>(null);
 
-  // 3. 상태(State) 관리
   const character = location.state?.character;
   const places = character ? plannerData[character.id] : [];
-  // 현재 선택된 장소의 인덱스 (기본값 0: 첫 번째 장소)
   const [activeIndex, setActiveIndex] = useState(0);
 
-  // 4. 지도 초기화 로직
   useEffect(() => {
-    // 필수 데이터나 카카오 객체가 없으면 중단
     if (!character || !mapRef.current || !window.kakao || places.length === 0) return;
 
     window.kakao.maps.load(() => {
       const container = mapRef.current;
       if (!container) return;
 
-      // 초기 중심점은 첫 번째 장소로 설정
+      // 1. 처음부터 첫 번째 장소를 중심으로 설정 (전체 범위를 잡는 setBounds 제거)
       const options = {
         center: new window.kakao.maps.LatLng(places[0].lat, places[0].lng),
-        level: 8, // 조금 더 상세히 보이도록 레벨 조정
+        level: 5, // 첫 번째 장소가 바로 잘 보이도록 적절한 확대 레벨 설정
       };
 
       const map = new window.kakao.maps.Map(container, options);
       mapInstance.current = map;
 
-      const bounds = new window.kakao.maps.LatLngBounds();
-
-      // 마커 뿌리기
+      // 2. 모든 마커를 미리 생성해서 지도에 올려둠 (이동 시 바로 보이게)
       places.forEach((place) => {
         const markerPosition = new window.kakao.maps.LatLng(place.lat, place.lng);
         const marker = new window.kakao.maps.Marker({
           position: markerPosition,
+          clickable: true
         });
         marker.setMap(map);
-        bounds.extend(markerPosition);
       });
-
-      // 장소가 여러 개일 경우 모든 마커가 보이도록 영역 재설정
-      if (places.length > 1) {
-        map.setBounds(bounds);
-      }
+      
+      // 첫 로드 시 지도가 잘 그려지도록 relayout 호출 (네트워크 환경 대비)
+      map.relayout();
     });
   }, [character, places]);
 
-  // 5. 리스트 아이템 클릭 핸들러
   const handlePlaceClick = (lat: number, lng: number, index: number) => {
+    // 3. 지도 객체가 확실히 있을 때만 실행
     if (!mapInstance.current) return;
 
-    // 활성화 상태 변경
     setActiveIndex(index);
 
-    // 지도 이동 및 확대
     const moveLatLon = new window.kakao.maps.LatLng(lat, lng);
-    mapInstance.current.panTo(moveLatLon);
-    mapInstance.current.setLevel(5); // 클릭 시 해당 장소를 자세히 보기 위해 확대
+    
+    // 4. 이동 전 지도가 깨지지 않도록 강제 재배치 후 부드럽게 이동
+    mapInstance.current.relayout(); 
+    mapInstance.current.setCenter(moveLatLon); // panTo 대신 setCenter로 확실하게 좌표 고정 후
+    mapInstance.current.setLevel(5); // 레벨 재조정
   };
 
-  // 잘못된 접근 처리
   if (!character) {
     return (
       <div style={{ padding: "100px 20px", textAlign: "center" }}>
@@ -86,15 +75,13 @@ export default function Planner() {
 
   return (
     <div style={{ display: "flex", height: "100vh", width: "100vw", overflow: "hidden" }}>
-      
-      {/* 🟢 왼쪽: 추천 코스 리스트 사이드바 */}
       <div style={{ 
         width: "380px", 
         padding: "30px 20px", 
         overflowY: "auto", 
         borderRight: "1px solid #eee", 
         backgroundColor: "#fff",
-        zIndex: 10 // 지도보다 위에 오도록
+        zIndex: 10 
       }}>
         <button 
           onClick={() => navigate(-1)} 
@@ -109,14 +96,13 @@ export default function Planner() {
             {character.name} 코스
           </h2>
           <p style={{ color: "#666", fontSize: "14px", lineHeight: "1.5" }}>
-            은지님의 여행 DNA에 꼭 맞는<br />추천 장소들을 모아봤어요.
+            은지님의 여행 DNA에 꼭 맞는 추천 장소들을 모아봤어요.
           </p>
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
           {places.map((place, idx) => {
-            const isActive = activeIndex === idx; // 현재 이 아이템이 활성화되었는지 확인
-            
+            const isActive = activeIndex === idx;
             return (
               <div 
                 key={idx} 
@@ -125,7 +111,7 @@ export default function Planner() {
                   padding: "20px", 
                   borderRadius: "16px", 
                   cursor: "pointer",
-                  transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)", // 부드러운 애니메이션
+                  transition: "all 0.3s ease",
                   backgroundColor: isActive ? "#fff" : "#f8f9fa",
                   border: isActive ? `2px solid ${character.color}` : "2px solid transparent",
                   boxShadow: isActive ? "0 8px 20px rgba(0,0,0,0.1)" : "none",
@@ -155,7 +141,6 @@ export default function Planner() {
         </div>
       </div>
 
-      {/* 🔵 오른쪽: 카카오 지도 영역 */}
       <div 
         ref={mapRef} 
         style={{ 
