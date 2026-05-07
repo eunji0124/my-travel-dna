@@ -33,20 +33,20 @@ export default function Survey() {
 
   return (
     <div style={{ padding: "20px", maxWidth: "500px", margin: "0 auto" }}>
-      {/* 🚀 상단 게이지 바 */}
+      {/* 상단 게이지 바 */}
       <div style={{ 
         width: "100%", 
         height: "8px", 
         backgroundColor: "#eee", 
         borderRadius: "10px", 
         marginBottom: "30px",
-        overflow: "hidden" // 안쪽 바가 튀어나가지 않게
+        overflow: "hidden"
       }}>
         <div style={{ 
           width: `${progressPercent}%`, 
           height: "100%", 
-          backgroundColor: "#4A90E2", // 은지님의 포인트 컬러로 변경 가능
-          transition: "width 0.3s ease-in-out", // 부드러운 애니메이션
+          backgroundColor: "#4A90E2",
+          transition: "width 0.3s ease-in-out",
           borderRadius: "10px"
         }} />
       </div>
@@ -73,7 +73,6 @@ export default function Survey() {
               fontSize: "16px",
               transition: "all 0.2s"
             }}
-            // 마우스 호버 효과를 주고 싶다면 별도의 CSS나 inline 이벤트를 활용하세요!
           >
             {option.text}
           </button>

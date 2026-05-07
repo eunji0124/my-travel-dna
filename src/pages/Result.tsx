@@ -32,7 +32,7 @@ export default function Result() {
         borderRadius: "24px",
         padding: "40px 20px",
         boxShadow: "0 10px 30px rgba(0,0,0,0.05)",
-        borderTop: `10px solid ${character.color}` // 캐릭터 고유색 포인트
+        borderTop: `10px solid ${character.color}`
       }}>
         <div style={{marginBottom: "20px" }}>
           <img 
@@ -44,10 +44,10 @@ export default function Result() {
               height: "auto",
               borderRadius: "15px" 
             }}
-            // 이미지가 없을 경우를 대비해 에러 처리를 하면 더 전문적입니다.
+            // 이미지가 없을 경우
             onError={(e) => {
-              e.currentTarget.style.display = 'none'; // 이미지가 없으면 숨기고
-              e.currentTarget.nextElementSibling?.setAttribute('style', 'display: block; font-size: 80px;'); // 이모지를 보여줌
+              e.currentTarget.style.display = 'none';
+              e.currentTarget.nextElementSibling?.setAttribute('style', 'display: block; font-size: 80px;');
             }}
           />
           <div style={{ display: "none" }}>{character.emoji}</div>
@@ -57,11 +57,11 @@ export default function Result() {
           {character.name}
         </h1>
         
-        <p style={{ fontSize: "1.1rem", color: "#444", fontWeight: "500", marginBottom: "25px" }}>
-          "{character.description}"
+        <p style={{ fontSize: "1rem", color: "#444", fontWeight: "500", marginBottom: "25px" }}>
+          {character.description}
         </p>
 
-        {/* 성향 요약 (Traits) */}
+        {/* 성향 요약 */}
         <div style={{
           display: "flex",
           justifyContent: "space-around",
@@ -71,16 +71,25 @@ export default function Result() {
           marginBottom: "30px"
         }}>
           <div>
-            <div style={{ fontSize: "12px", color: "#999" }}>활동성</div>
+            <div style={{ fontSize: "12px", color: "#999", marginBottom: "5px" }}>활동성</div>
             <div style={{ fontWeight: "bold" }}>{character.match.activity === 'active' ? '에너지' : '여유'}</div>
           </div>
           <div>
-            <div style={{ fontSize: "12px", color: "#999" }}>계획</div>
+            <div style={{ fontSize: "12px", color: "#999", marginBottom: "5px" }}>계획</div>
             <div style={{ fontWeight: "bold" }}>{character.match.planning === 'plan' ? '완벽' : '즉흥'}</div>
           </div>
           <div>
-            <div style={{ fontSize: "12px", color: "#999" }}>관심사</div>
-            <div style={{ fontWeight: "bold" }}>{character.match.focus}</div>
+            <div style={{ fontSize: "12px", color: "#999", marginBottom: "5px" }}>관심사</div>
+            <div style={{ fontWeight: "bold" }}>
+              {
+                {
+                  food: "미식탐방",
+                  photo: "인생샷",
+                  explore: "명소탐험",
+                  social: "친목도모",
+                }[character.match.focus as "food" | "photo" | "explore" | "social"] || "관광"
+              }
+            </div>
           </div>
         </div>
       </div>
@@ -88,7 +97,7 @@ export default function Result() {
       {/* 하단 버튼들 */}
       <div style={{ marginTop: "30px", display: "flex", flexDirection: "column", gap: "10px" }}>
         <button 
-          onClick={() => navigate("/planner", { state: { character } })} // 다음 단계인 플래너로 유도
+          onClick={() => navigate("/planner", { state: { character } })}
           style={{
             padding: "16px",
             borderRadius: "12px",

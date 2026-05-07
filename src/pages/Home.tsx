@@ -14,8 +14,7 @@ export default function Home() {
       textAlign: "center",
       backgroundColor: "#f9f9f9"
     }}>
-      {/* 귀여운 아이콘이나 일러스트가 들어갈 자리 */}
-      <div style={{ fontSize: "64px", marginBottom: "20px" }}>✈️</div>
+      <div style={{ fontSize: "64px", marginBottom: "20px" }}>🚗</div>
       
       <h1 style={{ fontSize: "2.5rem", fontWeight: "bold", marginBottom: "10px", color: "#333" }}>
         My Travel DNA

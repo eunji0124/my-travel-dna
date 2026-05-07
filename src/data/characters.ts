@@ -6,7 +6,7 @@ export const characters: Character[] = [
     name: "직진하는 노루",
     emoji: "🦌",
     match: { activity: "active", planning: "free", focus: "explore" },
-    description: "지치지 않고 걷는 트래킹 여행자",
+    description: "지치지 않는 체력으로 자연 속을 누비는 트래킹 매니아예요. 숲길과 해안길을 따라 걷는 여유로운 탐험을 즐깁니다.",
     color: "#2D6A4F",
   },
   {
@@ -14,7 +14,7 @@ export const characters: Character[] = [
     name: "에너자이저 수달",
     emoji: "🦦",
     match: { activity: "active", planning: "free", focus: "social" },
-    description: "액티비티 중독 여행자",
+    description: "활기찬 에너지로 액티비티를 정복하는 스타일! 서핑, 패러글라이딩처럼 짜릿한 경험과 즐거운 웃음이 끊이지 않는 여행을 선호해요.",
     color: "#00B4D8",
   },
   {
@@ -22,7 +22,7 @@ export const characters: Character[] = [
     name: "볼 빵빵 다람쥐",
     emoji: "🐿️",
     match: { activity: "calm", planning: "free", focus: "food" },
-    description: "맛집에 진심인 미식가",
+    description: "여행의 목적은 오직 맛있는 음식! 지역별 숨은 로컬 맛집부터 힙한 디저트 카페까지 정복하는 미식가 타입입니다.",
     color: "#FFB703",
   },
   {
@@ -30,7 +30,7 @@ export const characters: Character[] = [
     name: "꿈꾸는 나무늘보",
     emoji: "🦥",
     match: { activity: "calm", planning: "plan", focus: "explore" },
-    description: "힐링 여행자",
+    description: "바쁜 일상에서 벗어나 진정한 '쉼'을 찾는 힐링 여행자예요. 조용한 풍경을 바라보며 아무것도 하지 않는 시간에서 에너지를 얻습니다.",
     color: "#D4A373",
   },
   {
@@ -38,7 +38,7 @@ export const characters: Character[] = [
     name: "똑똑한 보더콜리",
     emoji: "🐕‍🦺",
     match: { activity: "active", planning: "plan", focus: "explore" },
-    description: "완벽 계획형",
+    description: "분 단위로 짜인 완벽한 동선에서 쾌감을 느끼는 프로 계획러! 효율적인 경로와 알찬 일정을 가장 중요하게 생각해요.",
     color: "#3F37C9",
   },
   {
@@ -46,7 +46,7 @@ export const characters: Character[] = [
     name: "호기심 대장 고양이",
     emoji: "🐈",
     match: { activity: "calm", planning: "free", focus: "explore" },
-    description: "즉흥 탐험가",
+    description: "정해진 길보다는 발길 닿는 대로 걷는 즉흥 탐험가예요. 골목 구석구석 숨겨진 공간을 발견할 때 여행의 즐거움을 느낍니다.",
     color: "#7209B7",
   },
   {
@@ -54,7 +54,7 @@ export const characters: Character[] = [
     name: "다정한 리트리버",
     emoji: "🐕",
     match: { activity: "calm", planning: "plan", focus: "social" },
-    description: "사람 중심 여행자",
+    description: "함께하는 사람들과의 추억을 가장 소중히 여겨요. 모두가 만족할 수 있는 다정하고 따뜻한 여행 코스를 선호하는 타입입니다.",
     color: "#99582A",
   },
   {
@@ -62,7 +62,7 @@ export const characters: Character[] = [
     name: "화려한 공작새",
     emoji: "🦚",
     match: { activity: "calm", planning: "free", focus: "photo" },
-    description: "인생샷 여행자",
+    description: "여행은 남는 게 사진! 보정 없이도 완벽한 인생샷 명소와 화려한 뷰를 찾아다니는 트렌드 세터 여행자예요.",
     color: "#F72585",
   },
 ];

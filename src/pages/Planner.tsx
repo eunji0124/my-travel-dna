@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { plannerData, type Place } from "../data/plannerData";
+import { useToast } from "../hooks/useToast";
+import { useCopyToClipboard } from "../hooks/useCopyToClipboard";
 
 declare global {
   interface Window {
@@ -32,31 +34,6 @@ interface KakaoPolyline {
   setMap: (map: KakaoMapInstance) => void;
 }
 
-// ✅ 토스트 훅
-function useToast(duration = 2500) {
-  const [message, setMessage] = useState<string | null>(null);
-  const show = (msg: string) => {
-    setMessage(msg);
-    setTimeout(() => setMessage(null), duration);
-  };
-  return { message, show };
-}
-
-// ✅ 클립보드 복사 훅
-function useCopyToClipboard() {
-  const [copied, setCopied] = useState(false);
-  const copy = async (text: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2500);
-    } catch {
-      console.error("클립보드 복사 실패");
-    }
-  };
-  return { copied, copy };
-}
-
 export default function Planner() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -65,7 +42,6 @@ export default function Planner() {
   const isMapReady = useRef(false);
 
   const character = location.state?.character;
-  // ✅ 코스 2개 유지: 지역 선택 버튼 복원
   const [selectedCourseIdx, setSelectedCourseIdx] = useState(0);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -143,7 +119,7 @@ export default function Planner() {
     isMapReady.current = false;
   };
 
-  // ✅ 카카오맵 내보내기 - 경유지 포함 길찾기
+  // 카카오맵 내보내기 - 경유지 포함 길찾기
   const handleExportToKakaoMap = () => {
     if (currentPlaces.length === 0) return;
     if (currentPlaces.length === 1) {
@@ -157,7 +133,7 @@ export default function Planner() {
     window.open(`https://map.kakao.com/link/by/car/${segments}`, "_blank");
   };
 
-  // ✅ 코스 복사 + 토스트 안내
+  // 코스 복사 + 토스트 안내
   const handleCopyCourse = async () => {
     const text = [
       `${character.emoji} ${character.name} 추천 코스`,
@@ -235,7 +211,7 @@ export default function Planner() {
           </>
         )}
 
-        {/* ✅ 코스 선택 버튼 (2개 지역) */}
+        {/* 코스 선택 버튼 (2개 지역) */}
         <div style={{ display: "flex", gap: "8px", marginBottom: "12px", flexWrap: "wrap" }}>
           {courses.map((course, idx) => (
             <button
@@ -262,11 +238,10 @@ export default function Planner() {
           "{currentCourse?.title}"
         </p>
 
-        {/* ✅ 장소 카드 - 클릭 없이 정보 표시만 */}
+        {/* 장소 리스트*/}
         <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginBottom: "24px" }}>
           {currentPlaces.map((place, idx) => (
             <div key={idx}>
-              {/* 카드: cursor/onClick 제거 → 순수 정보 표시 */}
               <div
                 style={{
                   padding: "16px",
@@ -352,7 +327,7 @@ export default function Planner() {
         )}
       </div>
 
-      {/* ✅ 토스트 팝업 */}
+      {/* 토스트 팝업 */}
       {toast.message && (
         <div style={{
           position: "fixed",
